@@ -3,7 +3,7 @@
 [![Latest Release](https://img.shields.io/github/v/release/evoxup/evoxup-membership?display_name=tag&sort=semver)](https://github.com/evoxup/evoxup-membership/releases/latest)
 [![Downloads](https://img.shields.io/github/downloads/evoxup/evoxup-membership/total)](https://github.com/evoxup/evoxup-membership/releases)
 [![WordPress](https://img.shields.io/badge/WordPress-Plugin-21759B?logo=wordpress&logoColor=white)](https://wordpress.org/)
-[![PHP](https://img.shields.io/badge/PHP-8.1%2B-777BB4?logo=php&logoColor=white)](https://www.php.net/)
+[![PHP](https://img.shields.io/badge/PHP-8.3%2B-777BB4?logo=php&logoColor=white)](https://www.php.net/)
 [![WooCommerce](https://img.shields.io/badge/WooCommerce-Compatible-96588A?logo=woocommerce&logoColor=white)](https://woocommerce.com/)
 [![License](https://img.shields.io/badge/License-GPL--2.0%2B-blue)](https://www.gnu.org/licenses/gpl-2.0.html)
 [![Last Commit](https://img.shields.io/github/last-commit/evoxup/evoxup-membership)](https://github.com/evoxup/evoxup-membership/commits/main)
