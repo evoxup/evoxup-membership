@@ -1,0 +1,19 @@
+{
+  "id": "evomembers-analytics-lite",
+  "name": "Analytics Lite",
+  "version": "1.0.0",
+  "description": "Local, read-only membership totals in a WordPress dashboard widget. No external tracking.",
+  "bootstrap": "bootstrap.php",
+  "class": "EvoMembersAnalyticsLite",
+  "requires_php": "8.3",
+  "requires_wp": "6.5",
+  "requires_evo": "1.8.4",
+  "requires_extension_api": "2.1.0",
+  "tested_extension_api": "2.1.0",
+  "tested_evo": "1.8.5",
+  "dashboard": {
+    "category": "Insights",
+    "icon": "dashicons-chart-bar",
+    "usage": "WordPress Dashboard widget: Evoxup Analytics Lite"
+  }
+}

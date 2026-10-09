@@ -1,0 +1,19 @@
+{
+  "id": "evomembers-social-identity-lite",
+  "name": "Social Identity Lite",
+  "version": "1.0.0",
+  "description": "Displays the signed-in WordPress profile identity without external OAuth or background requests.",
+  "bootstrap": "bootstrap.php",
+  "class": "EvoMembersSocialIdentityLite",
+  "requires_php": "8.3",
+  "requires_wp": "6.5",
+  "requires_evo": "1.8.4",
+  "requires_extension_api": "2.1.0",
+  "tested_extension_api": "2.1.0",
+  "tested_evo": "1.8.5",
+  "dashboard": {
+    "category": "Identity",
+    "icon": "dashicons-id",
+    "usage": "[evomembers_social_identity]"
+  }
+}

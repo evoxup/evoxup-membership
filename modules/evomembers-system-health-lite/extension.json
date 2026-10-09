@@ -1,0 +1,20 @@
+{
+  "id": "evomembers-system-health-lite",
+  "name": "System Health Lite",
+  "version": "1.0.0",
+  "description": "Read-only WordPress, PHP, HTTPS, memory, database, cron and WooCommerce diagnostics.",
+  "bootstrap": "bootstrap.php",
+  "class": "EvoMembersSystemHealthLite",
+  "requires_php": "8.3",
+  "requires_wp": "6.5",
+  "requires_evo": "1.8.4",
+  "requires_extension_api": "2.1.0",
+  "tested_extension_api": "2.1.0",
+  "tested_evo": "1.8.5",
+  "dashboard": {
+    "category": "Diagnostics",
+    "icon": "dashicons-heart",
+    "usage": "Read-only site diagnostics",
+    "admin_page": "evomembers-system-health-lite"
+  }
+}

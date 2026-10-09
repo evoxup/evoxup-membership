@@ -1,0 +1,19 @@
+{
+  "id": "evomembers-account-lite",
+  "name": "Account Lite",
+  "version": "1.0.0",
+  "description": "A privacy-conscious member account summary shortcode for signed-in users.",
+  "bootstrap": "bootstrap.php",
+  "class": "EvoMembersAccountLite",
+  "requires_php": "8.3",
+  "requires_wp": "6.5",
+  "requires_evo": "1.8.4",
+  "requires_extension_api": "2.1.0",
+  "tested_extension_api": "2.1.0",
+  "tested_evo": "1.8.5",
+  "dashboard": {
+    "category": "Member Experience",
+    "icon": "dashicons-admin-users",
+    "usage": "[evomembers_account_lite]"
+  }
+}
