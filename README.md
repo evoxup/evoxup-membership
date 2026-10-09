@@ -388,7 +388,7 @@ The architecture includes:
 Recommended production environment:
 
 - WordPress
-- PHP 8.1 or newer
+- PHP 8.2/8.3+ or newer
 - HTTPS for production websites
 - MySQL/MariaDB supported by the installed WordPress version
 
