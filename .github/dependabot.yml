@@ -3,6 +3,7 @@ version: 2
 updates:
   - package-ecosystem: "github-actions"
     directory: "/"
+
     schedule:
       interval: "weekly"
       day: "monday"
@@ -10,10 +11,6 @@ updates:
       timezone: "UTC"
 
     open-pull-requests-limit: 5
-
-    labels:
-      - "dependencies"
-      - "github-actions"
 
     commit-message:
       prefix: "chore"
