@@ -1,0 +1,19 @@
+{
+  "id": "evomembers-member-administration-lite",
+  "name": "Member Administration",
+  "version": "1.1.0",
+  "description": "Local WordPress and EVO member administration workspace with profiles, memberships, licenses, orders, entitlements and activity tools.",
+  "bootstrap": "bootstrap.php",
+  "class": "EvoMembersMemberAdministrationLite",
+  "requires_php": "8.3",
+  "requires_wp": "6.5",
+  "requires_evo": "1.8.5",
+  "requires_extension_api": "2.1.0",
+  "tested_extension_api": "2.1.0",
+  "tested_evo": "1.8.6",
+  "dashboard": {
+    "category": "Member Management",
+    "icon": "dashicons-groups",
+    "usage": "Evoxup > Customers"
+  }
+}

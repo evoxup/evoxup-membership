@@ -31,7 +31,7 @@ final class MemberAdministration {
         // must never prevent the member workspace from being styled.
         wp_enqueue_style(
             'evomembers-member-administration',
-            EVOMEMBERS_URL . 'assets/member-administration.css',
+            EVOMEMBERS_URL . 'modules/evomembers-member-administration-lite/assets/member-administration.css',
             array(),
             EVOMEMBERS_VERSION
         );
@@ -609,7 +609,7 @@ final class MemberAdministration {
     private function head( string $title, string $description = '' ): void {
         echo '<div class="wrap evo-wrap evox-member-admin"><header class="evox-member-hero"><div class="evox-member-hero-copy"><span class="evox-member-kicker">EVOXUP MEMBER OPERATIONS</span><h1>' . esc_html( $title ) . '</h1>';
         if ( '' !== $description ) { echo '<p>' . esc_html( $description ) . '</p>'; }
-        echo '</div><div class="evox-member-hero-mark"><span class="dashicons dashicons-groups"></span><div><strong>Member Administration</strong><small>Integrated workspace · v' . esc_html( EVOMEMBERS_VERSION ) . '</small></div></div></header>';
+        echo '</div><div class="evox-member-hero-mark"><span class="dashicons dashicons-groups"></span><div><strong>Member Administration</strong><small>Bundled module · v' . esc_html( EVOMEMBERS_VERSION ) . '</small></div></div></header>';
     }
 
     private function end(): void { echo '</div>'; }

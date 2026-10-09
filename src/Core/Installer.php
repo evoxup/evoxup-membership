@@ -6,6 +6,7 @@ defined( 'ABSPATH' ) || exit;
 final class Installer {
     public static function activate(): void {
         self::migrate_legacy_options();
+        self::migrate_member_administration_module();
         self::install();
         flush_rewrite_rules( false );
         RequiredComponents::install_on_activation();
@@ -13,14 +14,33 @@ final class Installer {
 
     public static function repair(): void {
         self::migrate_legacy_options();
+        self::migrate_member_administration_module();
         self::install();
     }
 
     public static function maybe_upgrade(): void {
         self::migrate_legacy_options();
+        self::migrate_member_administration_module();
         if ( EVOMEMBERS_DB_VERSION !== get_option( 'evomembers_db_version' ) ) {
             self::install();
         }
+    }
+
+
+    /** Preserve the existing Customers workspace when 1.8.6 moves it behind the bundled module switch. */
+    private static function migrate_member_administration_module(): void {
+        $marker = 'evomembers_member_administration_module_migrated';
+        if ( get_option( $marker, false ) ) {
+            return;
+        }
+        $active = get_option( 'evomembers_active_modules', array() );
+        $active = is_array( $active ) ? array_values( array_unique( array_map( 'sanitize_key', $active ) ) ) : array();
+        $id = 'evomembers-member-administration-lite';
+        if ( ! in_array( $id, $active, true ) ) {
+            $active[] = $id;
+            update_option( 'evomembers_active_modules', $active, false );
+        }
+        update_option( $marker, 1, false );
     }
 
     /** Migrate legacy short-prefix options once, preserving existing installations. */

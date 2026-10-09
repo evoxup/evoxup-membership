@@ -1,5 +1,15 @@
 # Evoxup Membership Changelog
 
+## 1.8.6
+- Moved Evoxup Member Administration 1.1.0 from the always-on Core Customers workspace into the bundled internal `evomembers-member-administration-lite` module.
+- Added local Enable / Disable control through the existing Extensions & Add-ons module system; no separate plugin, remote executable download, or license gate is required.
+- Added a one-time upgrade migration that auto-enables the internal Member Administration module for sites upgrading from the prior 1.8.5 integrated Customers workspace.
+- Preserved customer/member, membership, license, activation, order, entitlement, and event data independently of the module enabled state.
+- Fixed the `block_categories_all` callback registration so the accepted argument count matches the callback signature.
+- Simplified legacy table-prefix migration error initialization without changing migration behavior.
+- Updated bundled module compatibility metadata for Evoxup Membership 1.8.6.
+- Kept database schema 3.1.1 and Extension API 2.1.0 unchanged.
+
 ## 1.8.5
 - Fixed WordPress.org output escaping in the integrated Customers workspace status badges without changing member-management behavior.
 - Fixed Customers so it is a unified local directory of WordPress users and EVO customer records; native WordPress accounts, including administrators, are visible before an EVO record exists.

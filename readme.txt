@@ -4,7 +4,7 @@ Tags: membership, licensing, woocommerce, webhooks, integrations
 Requires at least: 6.5
 Requires PHP: 8.3
 Tested up to: 7.1
-Stable tag: 1.8.5
+Stable tag: 1.8.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://evoxup.com/donate/
@@ -24,7 +24,7 @@ A license or membership key may be used only to verify eligibility for separatel
 * EVO Products as the canonical product identity used by Evoxup.
 * Membership Plans and Product-to-Plan relationships.
 * Customers and members, while preserving the native WordPress user ID when a WordPress account is linked.
-* Integrated Member Administration workspace that lists native WordPress users and EVO members together, then provides profile, membership, license, activation, order-context, entitlement, and activity management after an EVO member record exists.
+* Bundled Member Administration module that can be enabled or disabled from Extensions & Add-ons. When enabled, it lists native WordPress users and EVO members together and provides profile, membership, license, activation, order-context, entitlement, and activity management after an EVO member record exists.
 * Membership lifecycle, status, start and expiration dates.
 * EVO licenses, activations, verification rules, domains and entitlement state.
 * Product and membership entitlements.
@@ -78,7 +78,7 @@ Remote webhook fulfillment does not create WordPress users. If a matching WordPr
 
 = Free modules and optional add-ons =
 
-Evoxup Membership 1.8.5 includes optional local Lite modules that can be enabled or disabled by an administrator from Extensions & Add-ons. These modules are bundled in the plugin ZIP and are fully functional without a paid key.
+Evoxup Membership 1.8.6 includes optional local Lite modules that can be enabled or disabled by an administrator from Extensions & Add-ons. These modules are bundled in the plugin ZIP and are fully functional without a paid key.
 
 PRO and SUPER STAR add-ons shown on the Extensions & Add-ons screen are informational references to separately distributed products. Their executable code is not included in this plugin, is not downloaded by this plugin, and no built-in feature is locked behind an upgrade.
 
@@ -106,9 +106,11 @@ Administrators may configure authenticated webhook integrations for purchase ful
 
 If a configured provider requires outbound API requests, only the data required by that integration is sent after the administrator enables it. The site owner should review the provider's Terms of Use and Privacy Policy before configuration.
 
-= Evoxup.com links =
+= Evoxup.com and GitHub links =
 
-The plugin administration screens can contain optional links to https://evoxup.com/evo-membership and https://evoxup.com/donate/. Following these links is a normal browser navigation initiated by the administrator; the plugin does not send site/customer/license data to Evoxup.com in the background.
+The plugin administration screens and documentation can contain optional links to https://evoxup.com/evo-membership, https://evoxup.com/donate/, and the official Evoxup Membership GitHub repository at https://github.com/evoxup/evoxup-membership.
+
+Following these links is normal browser navigation initiated by the administrator. The plugin does not send site, customer, membership, license, or order data to Evoxup.com or GitHub in the background merely because these links are present.
 
 = WooCommerce =
 
@@ -119,7 +121,7 @@ WooCommerce integration is local to the WordPress installation unless the site o
 1. Upload the `evoxup-membership` folder to `/wp-content/plugins/`, or install the plugin through the WordPress Plugins screen.
 2. Activate **Evoxup Membership — Membership, Licensing, & Universal Integrations**.
 3. Open the Evoxup administration menu.
-4. Open Customers to use the integrated Member Administration workspace, then create or review your EVO Products and Membership Plans.
+4. Enable Member Administration from Extensions & Add-ons, then open Customers to manage WordPress users and EVO members.
 5. Configure licensing rules for Products that use EVO licensing.
 6. Optionally map WooCommerce products to EVO Products.
 7. Optionally configure verified external providers/webhooks under Integrations.
@@ -173,8 +175,6 @@ No. Evoxup Membership Core updates through WordPress.org and does not require an
 8. Integrations — connect WooCommerce and supported providers, manage mappings, and configure verified webhooks.
 9. Extensions & Add-ons — manage bundled Lite modules and discover optional PRO and SUPER STAR extensions.
 
-For the WordPress.org listing, upload the corresponding images as `screenshot-1.png` through `screenshot-8.png` in the plugin directory's WordPress.org `assets` area.
-
 
 == Support Evoxup ==
 
@@ -184,9 +184,32 @@ Donate: https://evoxup.com/donate/
 
 Donations are optional and do not unlock features, licenses, memberships, updates, support tiers, or any functionality included in the WordPress.org plugin.
 
+== Development and Source Code ==
+
+Evoxup Membership is developed publicly on GitHub.
+
+* Source code: https://github.com/evoxup/evoxup-membership
+* Latest releases: https://github.com/evoxup/evoxup-membership/releases
+* Issue tracker: https://github.com/evoxup/evoxup-membership/issues
+* Developer documentation: https://github.com/evoxup/evoxup-membership/tree/main/docs
+* Security policy: https://github.com/evoxup/evoxup-membership/security/policy
+* Contributing guidelines: https://github.com/evoxup/evoxup-membership/blob/main/.github/CONTRIBUTING.md
+
+Bug reports, compatibility reports, and contributions are welcome through the public GitHub repository.
+
+Security vulnerabilities should not be reported through public issues. Please use the private vulnerability reporting process described in the Security Policy.
+
 == Changelog ==
 
+= 1.8.6 =
+* Moved Evoxup Member Administration 1.1.0 from the always-on Core Customers workspace into the bundled internal `evomembers-member-administration-lite` module with local Enable / Disable control.
+* Added a one-time migration that keeps the existing Customers workspace enabled when upgrading from 1.8.5, while preserving member, membership, license, order, entitlement, and event data when the module is disabled.
+* Fixed the block category callback argument registration so it matches the callback signature and passes static analysis cleanly.
+* Simplified legacy table-prefix migration error initialization without changing database migration behavior.
+* Updated bundled module compatibility metadata for Evoxup Membership 1.8.6 while keeping database schema 3.1.1 and Extension API 2.1.0 unchanged.
+
 = 1.8.5 =
+* Fixed WordPress.org output escaping in the integrated Customers workspace status badges without changing member-management behavior.
 * Merged Evoxup Member Administration 1.1.0 into the WordPress.org Core package as an integrated Customers workspace; no separate extension or executable add-on is required.
 * Added member profile editing, membership operations, license/activation operations, entitlement view, order context, search/filtering, and private activity notes behind existing Evoxup capabilities and nonces.
 * Preserved the public-build account boundary: remote fulfillment does not create WordPress users; the integrated admin workspace links only existing local WordPress accounts.
@@ -230,6 +253,9 @@ Donations are optional and do not unlock features, licenses, memberships, update
 * Removed obsolete Remote Runtime/generated Cloud Proxy customer execution paths while preserving the membership/licensing model and Repository entitlement behavior.
 
 == Upgrade Notice ==
+
+= 1.8.6 =
+Moves Member Administration 1.1.0 from the always-on Core workspace into a bundled internal module, preserving the existing Customers workspace through a one-time migration and including static-analysis compatibility fixes.
 
 = 1.8.5 =
 Integrates Member Administration directly into Evoxup Membership and removes the need for a separate member-administration extension in the public build.

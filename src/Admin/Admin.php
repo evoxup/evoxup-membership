@@ -33,7 +33,6 @@ defined( 'ABSPATH' ) || exit;
 
 final class Admin {
     private bool $audit_recorded = false;
-    private ?MemberAdministration $member_administration = null;
 
     public function boot(): void {
         add_action( 'admin_menu', array( $this, 'menu' ) );
@@ -44,7 +43,6 @@ final class Admin {
     public function menu(): void {
         add_menu_page( 'Evoxup', 'Evoxup', Capabilities::DASHBOARD, 'evomembers-members', array( $this, 'dashboard' ), Brand::menu_icon(), 56 );
         add_submenu_page( 'evomembers-members', 'Dashboard', 'Dashboard', Capabilities::DASHBOARD, 'evomembers-members', array( $this, 'dashboard' ) );
-        add_submenu_page( 'evomembers-members', 'Customers', 'Customers', Capabilities::CUSTOMERS, 'evomembers-customers', array( $this, 'customers' ) );
         add_submenu_page( 'evomembers-members', 'Memberships', 'Memberships', Capabilities::MEMBERSHIPS, 'evomembers-membership', array( $this, 'membership' ) );
         add_submenu_page( 'evomembers-members', 'Products', 'Products', Capabilities::PRODUCTS, 'evomembers-products', array( $this, 'products' ) );
         add_submenu_page( 'evomembers-members', 'Orders', 'Orders', Capabilities::ORDERS, 'evomembers-orders', array( $this, 'orders' ) );
@@ -62,17 +60,12 @@ final class Admin {
         }
         wp_enqueue_style( 'evoxup-membership-admin', EVOMEMBERS_URL . 'assets/admin.css', array(), EVOMEMBERS_VERSION );
         wp_enqueue_script( 'evoxup-membership-admin', EVOMEMBERS_URL . 'assets/admin.js', array( 'jquery' ), EVOMEMBERS_VERSION, true );
-        if ( false !== strpos( $hook, 'evomembers-customers' ) ) {
-            $this->member_administration()->assets( $hook );
-        }
         if ( false !== strpos( $hook, 'evomembers-products' ) ) {
             wp_enqueue_media();
         }
     }
 
     public function actions(): void {
-        $this->member_administration()->actions();
-
         $method = strtoupper( (string) filter_input( INPUT_SERVER, 'REQUEST_METHOD', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
         if ( 'POST' !== $method ) {
             return;
@@ -142,26 +135,6 @@ final class Admin {
             }
             $ok = $products->delete( $product_id, ! empty( $post['force_delete'] ) );
             $this->redirect( 'evomembers-products', $ok ? 'Product deleted/archived according to history protection.' : 'Product could not be deleted.', ! $ok );
-        }
-        if ( 'set_customer_status' === $action ) {
-            $ok = ( new CustomerService() )->set_status( absint( $post['customer_id'] ?? 0 ), sanitize_key( (string) ( $post['customer_status'] ?? '' ) ) );
-            $this->redirect( 'evomembers-customers', $ok ? 'Customer status updated.' : 'Customer status update failed.', ! $ok );
-        }
-        if ( 'delete_customer' === $action ) {
-            $force = ! empty( $post['force_delete'] );
-            $delete_wp = $force && ! empty( $post['delete_wp_user'] );
-            $ok = ( new CustomerService() )->delete( absint( $post['customer_id'] ?? 0 ), $force, $delete_wp );
-            $this->redirect( 'evomembers-customers', $ok ? 'Customer deleted/archived according to history protection.' : 'Customer could not be deleted.', ! $ok );
-        }
-        if ( 'ensure_customer_wp_user' === $action ) {
-            $customer_id = absint( $post['customer_id'] ?? 0 );
-            $result = ( new CustomerService() )->ensure_wp_user( $customer_id );
-            $this->redirect( 'evomembers-customers&customer_id=' . $customer_id, is_wp_error( $result ) ? $result->get_error_message() : 'Existing WordPress account linked.', is_wp_error( $result ) );
-        }
-        if ( 'send_customer_access' === $action ) {
-            $customer_id = absint( $post['customer_id'] ?? 0 );
-            $result = ( new CustomerService() )->send_account_access( $customer_id );
-            $this->redirect( 'evomembers-customers&customer_id=' . $customer_id, is_wp_error( $result ) ? $result->get_error_message() : ( $result ? 'Member access message sent.' : 'Member access message could not be sent.' ), is_wp_error( $result ) || ! $result );
         }
         if ( 'set_order_status' === $action ) {
             $ok = ( new OrderService() )->set_status( absint( $post['order_id'] ?? 0 ), sanitize_key( (string) ( $post['order_status'] ?? '' ) ) );
@@ -590,8 +563,8 @@ final class Admin {
     public function dashboard(): void {
         $this->head( 'Dashboard', 'One administration hub for the complete Evoxup Membership workflow, local Lite modules and future extension discovery.' );
 
+        $member_admin_active = $this->module_active( 'evomembers-member-administration-lite' );
         $counts = array(
-            array( 'Customers', ( new CustomerService() )->directory_count(), 'evomembers-customers', 'dashicons-groups' ),
             array( 'Memberships', ( new MembershipService() )->count(), 'evomembers-membership', 'dashicons-id-alt' ),
             array( 'Products', ( new ProductService() )->count(), 'evomembers-products', 'dashicons-products' ),
             array( 'Orders', ( new OrderService() )->count(), 'evomembers-orders', 'dashicons-cart' ),
@@ -599,6 +572,9 @@ final class Admin {
             array( 'Integrations', ( new IntegrationService() )->count(), 'evomembers-integrations', 'dashicons-rest-api' ),
             array( 'Webhooks', ( new WebhookService() )->count(), 'evomembers-webhooks', 'dashicons-rss' ),
         );
+        if ( $member_admin_active ) {
+            array_unshift( $counts, array( 'Customers', ( new CustomerService() )->directory_count(), 'evomembers-customers', 'dashicons-groups' ) );
+        }
         echo '<div class="evomembers-dashboard-kpis">';
         foreach ( $counts as $item ) {
             $url = add_query_arg( 'page', $item[2], admin_url( 'admin.php' ) );
@@ -608,7 +584,6 @@ final class Admin {
 
         $navigation = array(
             'Membership management' => array(
-                array( 'Customers', 'Member identities, WordPress account links and customer lifecycle.', 'evomembers-customers', 'dashicons-groups', Capabilities::CUSTOMERS ),
                 array( 'Memberships & Plans', 'Plans, memberships, entitlements and lifecycle rules.', 'evomembers-membership', 'dashicons-id-alt', Capabilities::MEMBERSHIPS ),
                 array( 'Products', 'Canonical EVO products and WooCommerce product relationships.', 'evomembers-products', 'dashicons-products', Capabilities::PRODUCTS ),
                 array( 'Orders', 'Normalized local order ledger and purchase history.', 'evomembers-orders', 'dashicons-cart', Capabilities::ORDERS ),
@@ -622,6 +597,9 @@ final class Admin {
                 array( 'Settings', 'Membership center, API behavior, mail and local platform settings.', 'evomembers-settings', 'dashicons-admin-settings', Capabilities::SETTINGS ),
             ),
         );
+        if ( $member_admin_active ) {
+            array_unshift( $navigation['Membership management'], array( 'Customers', 'Member identities, WordPress account links and customer lifecycle.', 'evomembers-customers', 'dashicons-groups', Capabilities::CUSTOMERS ) );
+        }
         $navigation = apply_filters( 'evomembers_dashboard_links', $navigation );
 
         echo '<div class="evomembers-dashboard-layout"><main class="evomembers-dashboard-main">';
@@ -681,10 +659,6 @@ final class Admin {
         echo '</aside></div>';
         do_action( 'evomembers_dashboard_after' );
         $this->end();
-    }
-
-    public function customers(): void {
-        $this->member_administration()->render( false );
     }
 
     public function membership(): void {
@@ -1400,8 +1374,8 @@ final class Admin {
         }
 
         echo '<div class="evo-addon-hero">';
-        echo '<div class="evo-addon-hero-copy"><span class="evo-addon-kicker">BUILD YOUR MEMBERSHIP STACK</span><h2>Start free. Add only what your site needs.</h2><p>Lite modules below are included in Evoxup Membership 1.8.5 and run entirely on this WordPress site. PRO and SUPER STAR cards are previews of separate products only.</p><div class="evo-addon-hero-pills"><span>✓ No feature locks</span><span>✓ No background downloads</span><span>✓ Local enable / disable</span></div></div>';
-        echo '<div class="evo-addon-hero-badge"><strong>1.8.5</strong><span>WordPress.org build</span></div>';
+        echo '<div class="evo-addon-hero-copy"><span class="evo-addon-kicker">BUILD YOUR MEMBERSHIP STACK</span><h2>Start free. Add only what your site needs.</h2><p>Lite modules below are included in Evoxup Membership 1.8.6 and run entirely on this WordPress site. PRO and SUPER STAR cards are previews of separate products only.</p><div class="evo-addon-hero-pills"><span>✓ No feature locks</span><span>✓ No background downloads</span><span>✓ Local enable / disable</span></div></div>';
+        echo '<div class="evo-addon-hero-badge"><strong>1.8.6</strong><span>WordPress.org build</span></div>';
         echo '</div>';
 
         $installed = ( new ModuleLoader() )->discover();
@@ -1813,11 +1787,10 @@ final class Admin {
         return true;
     }
 
-    private function member_administration(): MemberAdministration {
-        if ( null === $this->member_administration ) {
-            $this->member_administration = new MemberAdministration();
-        }
-        return $this->member_administration;
+    private function module_active( string $id ): bool {
+        $active = get_option( 'evomembers_active_modules', array() );
+        $active = is_array( $active ) ? array_values( array_unique( array_map( 'sanitize_key', $active ) ) ) : array();
+        return in_array( sanitize_key( $id ), $active, true );
     }
 
     private function required_capability( string $action ): string {
@@ -1826,10 +1799,6 @@ final class Admin {
             'sync_woocommerce_products' => Capabilities::PRODUCTS,
             'update_product' => Capabilities::PRODUCTS_EDIT_OWN,
             'delete_product' => Capabilities::PRODUCTS_DELETE_OWN,
-            'set_customer_status' => Capabilities::CUSTOMERS,
-            'delete_customer' => Capabilities::CUSTOMERS,
-            'ensure_customer_wp_user' => Capabilities::CUSTOMERS,
-            'send_customer_access' => Capabilities::CUSTOMERS,
             'set_order_status' => Capabilities::ORDERS,
             'delete_order' => Capabilities::ORDERS,
             'save_mapping' => Capabilities::INTEGRATIONS,
@@ -1882,7 +1851,7 @@ final class Admin {
     private function audit_resource( string $action, array $post ): array {
         $map = array(
             'product' => array( 'create_product', 'update_product', 'delete_product' ),
-            'customer' => array( 'set_customer_status', 'delete_customer', 'ensure_customer_wp_user', 'send_customer_access', 'send_member_message', 'create_member_notification' ),
+            'customer' => array( 'send_member_message', 'create_member_notification' ),
             'order' => array( 'set_order_status', 'delete_order' ),
             'license' => array( 'delete_license', 'set_license_status', 'license_item_action', 'verify_license_admin', 'issue_license' ),
             'activation' => array( 'deactivate_activation' ),

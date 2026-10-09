@@ -10,7 +10,7 @@
   "requires_evo": "1.8.4",
   "requires_extension_api": "2.1.0",
   "tested_extension_api": "2.1.0",
-  "tested_evo": "1.8.5",
+  "tested_evo": "1.8.6",
   "dashboard": {
     "category": "Insights",
     "icon": "dashicons-chart-bar",

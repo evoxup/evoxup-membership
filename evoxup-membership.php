@@ -3,7 +3,7 @@
  * Plugin Name: Evoxup Membership — Membership, Licensing, & Universal Integrations
  * Plugin URI: https://evoxup.com/
  * Description: Free membership and licensing management for WordPress, with optional local WooCommerce integration, secure webhooks and versioned APIs.
- * Version: 1.8.5
+ * Version: 1.8.6
  * Requires at least: 6.5
  * Requires PHP: 8.3
  * WC requires at least: 8.0
@@ -44,7 +44,7 @@ add_action(
     }
 );
 
-define( 'EVOMEMBERS_VERSION', '1.8.5' );
+define( 'EVOMEMBERS_VERSION', '1.8.6' );
 define( 'EVOMEMBERS_FILE', __FILE__ );
 define( 'EVOMEMBERS_PATH', plugin_dir_path( __FILE__ ) );
 define( 'EVOMEMBERS_URL', plugin_dir_url( __FILE__ ) );
