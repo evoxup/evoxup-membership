@@ -1,0 +1,162 @@
+name: Bug Report
+description: Report a reproducible problem in Evoxup Membership
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for helping improve **Evoxup Membership**.
+
+        Before submitting:
+        - Confirm the issue is reproducible.
+        - Use the latest supported release when possible.
+        - Do not include passwords, license keys, API secrets, webhook secrets, access tokens, private customer data, or other sensitive information.
+        - Security vulnerabilities must be reported privately according to the Security Policy.
+
+  - type: input
+    id: evoxup_version
+    attributes:
+      label: Evoxup Membership version
+      description: Enter the exact version where the issue occurs.
+      placeholder: "1.8.5"
+    validations:
+      required: true
+
+  - type: input
+    id: wordpress_version
+    attributes:
+      label: WordPress version
+      placeholder: "6.x"
+    validations:
+      required: true
+
+  - type: input
+    id: php_version
+    attributes:
+      label: PHP version
+      placeholder: "8.1 / 8.2 / 8.3"
+    validations:
+      required: true
+
+  - type: input
+    id: database
+    attributes:
+      label: Database
+      description: MySQL or MariaDB version, if known.
+      placeholder: "MySQL 8.0 / MariaDB 10.x"
+    validations:
+      required: false
+
+  - type: input
+    id: woocommerce_version
+    attributes:
+      label: WooCommerce version
+      description: Leave blank if WooCommerce is not involved.
+      placeholder: "WooCommerce x.x.x"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Affected area
+      options:
+        - Memberships
+        - Products
+        - Membership Plans
+        - Licensing
+        - Entitlements
+        - Customers / Members
+        - Orders / Fulfillment
+        - WooCommerce Integration
+        - External Provider Integration
+        - Webhooks
+        - REST API
+        - SDK
+        - Extensions / Modules
+        - Admin Interface
+        - Frontend
+        - Notifications / Email
+        - Installation / Activation
+        - Upgrade / Migration
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: provider
+    attributes:
+      label: Integration or provider
+      description: If the issue involves a specific provider, integration, extension, or module, enter its name.
+      placeholder: "WooCommerce / external provider / module name"
+    validations:
+      required: false
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Problem description
+      description: Clearly describe what is wrong.
+      placeholder: "Describe the problem and its impact."
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      placeholder: "What should have happened?"
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      placeholder: "What happened instead?"
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      description: Provide the smallest reliable sequence that reproduces the problem.
+      placeholder: |
+        1. Go to ...
+        2. Configure ...
+        3. Click ...
+        4. Observe ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant logs or error messages
+      description: Remove all secrets and private data before posting.
+      render: shell
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional context
+      description: Add screenshots, compatibility information, or other useful details.
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Confirmation
+      options:
+        - label: I searched existing issues and did not find the same report.
+          required: true
+        - label: I removed passwords, license keys, API secrets, webhook secrets, tokens, and private customer information.
+          required: true
+        - label: This is not a security vulnerability requiring private disclosure.
+          required: true
