@@ -8,7 +8,7 @@ use EvoMembers\Frontend\MembershipHub;
 final class Blocks {
     public function boot(): void {
         add_action( 'init', array( $this, 'register' ), 30 );
-        add_filter( 'block_categories_all', array( $this, 'category' ), 10, 2 );
+        add_filter( 'block_categories_all', array( $this, 'category' ), 10 );
     }
 
     public function category( array $categories ): array {
