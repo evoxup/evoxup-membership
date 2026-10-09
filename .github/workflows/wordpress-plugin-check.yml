@@ -30,6 +30,11 @@ jobs:
           wp-version: "latest"
           include-experimental: "false"
           strict: "false"
+
           exclude-directories: |
             .git
             .github
+
+          exclude-files: |
+            phpstan.neon.dist
+            phpstan-bootstrap.php
