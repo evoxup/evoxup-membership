@@ -1,41 +1,64 @@
 # Evoxup Membership
 
-[![Latest Release](https://img.shields.io/github/v/release/evoxup/evoxup-membership?display_name=tag&sort=semver)](https://github.com/evoxup/evoxup-membership/releases/latest)
-[![Downloads](https://img.shields.io/github/downloads/evoxup/evoxup-membership/total)](https://github.com/evoxup/evoxup-membership/releases)
-[![WordPress](https://img.shields.io/badge/WordPress-Plugin-21759B?logo=wordpress&logoColor=white)](https://wordpress.org/)
-[![PHP](https://img.shields.io/badge/PHP-8.3%2B-777BB4?logo=php&logoColor=white)](https://www.php.net/)
-[![WooCommerce](https://img.shields.io/badge/WooCommerce-Compatible-96588A?logo=woocommerce&logoColor=white)](https://woocommerce.com/)
-[![License](https://img.shields.io/badge/License-GPL--2.0%2B-blue)](https://www.gnu.org/licenses/gpl-2.0.html)
-[![Last Commit](https://img.shields.io/github/last-commit/evoxup/evoxup-membership)](https://github.com/evoxup/evoxup-membership/commits/main)
+<p align="center">
+  <strong>Membership • Licensing • WooCommerce • Entitlements • Universal Integrations</strong>
+</p>
 
-**Professional WordPress membership, licensing, WooCommerce integration, entitlement management, and extensible commerce platform.**
+<p align="center">
+  A modular WordPress membership and licensing platform for products, plans, customers, entitlements, commerce fulfillment, WooCommerce, verified webhooks, and integrations.
+</p>
 
-[Website](https://evoxup.com/) ·
-[Evoxup Membership](https://evoxup.com/evo-membership/) ·
-[Latest Release](https://github.com/evoxup/evoxup-membership/releases/latest) ·
-[Documentation](https://github.com/evoxup/evoxup-membership/tree/main/docs) ·
-[Issues](https://github.com/evoxup/evoxup-membership/issues)
+<p align="center">
+  <a href="https://github.com/evoxup/evoxup-membership/releases/latest">
+    <img src="https://img.shields.io/github/v/release/evoxup/evoxup-membership?display_name=tag&label=Release" alt="Latest Release">
+  </a>
+  <a href="https://github.com/evoxup/evoxup-membership/blob/main/LICENSE">
+    <img src="https://img.shields.io/github/license/evoxup/evoxup-membership?label=License" alt="License">
+  </a>
+  <img src="https://img.shields.io/badge/PHP-8.3%2B-777BB4?logo=php&logoColor=white" alt="PHP 8.3+">
+  <img src="https://img.shields.io/badge/WordPress-6.5%2B-21759B?logo=wordpress&logoColor=white" alt="WordPress 6.5+">
+  <img src="https://img.shields.io/badge/Tested%20up%20to-7.1-21759B?logo=wordpress&logoColor=white" alt="WordPress Tested up to 7.1">
+</p>
+
+<p align="center">
+  <a href="https://github.com/evoxup/evoxup-membership/actions/workflows/php-syntax.yml">
+    <img src="https://github.com/evoxup/evoxup-membership/actions/workflows/php-syntax.yml/badge.svg?branch=main" alt="PHP Syntax Check">
+  </a>
+  <a href="https://github.com/evoxup/evoxup-membership/actions/workflows/phpstan.yml">
+    <img src="https://github.com/evoxup/evoxup-membership/actions/workflows/phpstan.yml/badge.svg?branch=main" alt="PHPStan Static Analysis">
+  </a>
+  <a href="https://github.com/evoxup/evoxup-membership/actions/workflows/wordpress-plugin-check.yml">
+    <img src="https://github.com/evoxup/evoxup-membership/actions/workflows/wordpress-plugin-check.yml/badge.svg?branch=main" alt="WordPress Plugin Check">
+  </a>
+</p>
+
+<p align="center">
+  <a href="https://evoxup.com/evo-membership/"><strong>Website</strong></a>
+  ·
+  <a href="https://github.com/evoxup/evoxup-membership/releases/latest"><strong>Download</strong></a>
+  ·
+  <a href="https://github.com/evoxup/evoxup-membership/tree/main/docs"><strong>Documentation</strong></a>
+  ·
+  <a href="https://github.com/evoxup/evoxup-membership/issues"><strong>Issues</strong></a>
+  ·
+  <a href="https://github.com/evoxup/evoxup-membership/security/policy"><strong>Security</strong></a>
+</p>
 
 ---
 
-## About Evoxup Membership
+## Overview
 
-**Evoxup Membership** is a professional WordPress-native platform for managing memberships, products, membership plans, licenses, customers, entitlements, integrations, fulfillment workflows, and commerce-related access.
+**Evoxup Membership** is a WordPress platform for managing memberships, licensing, customers, products, membership plans, entitlements, commerce fulfillment, WooCommerce integrations, verified webhooks, and external service integrations from one administration environment.
 
-The platform is designed around a modular and extensible architecture that allows the core membership and licensing system to remain stable while additional capabilities can be introduced through extensions, integrations, providers, APIs, and WordPress hooks.
+The public WordPress build is designed around a clear principle:
 
-Evoxup Membership can support multiple types of commercial and membership workflows, including:
+> **Every feature included in the plugin is available without a paid license, paid membership, trial, quota, or activation key.**
 
-- Membership products
-- Membership plans
-- Licensed WordPress products
-- WooCommerce products
-- External commerce providers
-- Internal Evoxup products
-- Free and paid products
-- Entitlement-based access
-- Modular extensions
-- External license providers
+License or membership keys may be used to verify eligibility for separately distributed commercial Evoxup packages or external services, but they do not unlock functionality that is already included in the public plugin.
+
+Current release:
+
+**Evoxup Membership 1.8.6**
 
 ---
 
@@ -43,123 +66,274 @@ Evoxup Membership can support multiple types of commercial and membership workfl
 
 ### Membership Management
 
-- Create and manage memberships
-- Associate customers with memberships
-- Membership plan management
-- Membership status handling
-- Membership-aware entitlements
-- Membership lifecycle infrastructure
-- Customer and member administration
-
-### Products & Plans
-
-- Evoxup product management
-- Membership plan management
+- Membership plans and lifecycle management
 - Product-to-plan relationships
-- Product-specific licensing
-- Purchase links
-- External product mappings
-- Commerce provider integration
-- Flexible fulfillment routing
+- Membership status, start date, and expiration handling
+- Member entitlement management
+- Membership assignment through verified fulfillment flows
+
+### EVO Products
+
+EVO Products act as the canonical commercial identity inside Evoxup.
+
+A product can be linked to:
+
+- One or more Membership Plans
+- WooCommerce products
+- External commerce providers
+- EVO licensing
+- Supported external licensing providers
+- Entitlements
+- Purchase and fulfillment workflows
+
+This avoids creating a separate duplicate product model for every integration.
 
 ### Licensing
 
-- License generation
-- License verification
-- Product-aware licenses
-- Membership-aware licenses
-- License provider architecture
-- Internal and external licensing support
-- Entitlement validation
-- Extensible license verification workflows
+Evoxup Membership can issue and manage EVO licenses for products configured to use EVO licensing.
+
+License verification can evaluate:
+
+- Product identity
+- License status
+- Activation/site binding
+- Membership entitlement
+- Domain/site information
+- Configured access tier
+- Client version
+- Other configured verification requirements
+
+When another licensing provider is selected, Evoxup can preserve that provider's ownership of the licensing flow instead of generating a duplicate EVO license.
 
 ### Entitlements
 
-- Centralized entitlement management
-- Product-based access
-- Membership-based access
-- Plan-based access
-- License-aware permissions
-- Extension-aware capabilities
-- Flexible access rules
+Entitlements connect products, plans, memberships, licenses, and access rights.
 
-### WooCommerce Integration
+A verified purchase can:
 
-- WooCommerce product integration
-- Product licensing support
-- WooCommerce fulfillment
-- Customer synchronization workflows
-- Commerce-independent membership architecture
-- Optional WooCommerce integration without making WooCommerce a core dependency
+1. Resolve the provider product.
+2. Map it to an EVO Product.
+3. Create or update the Evoxup customer/member record.
+4. Grant the configured Membership Plan.
+5. Issue an EVO license when EVO licensing is selected.
+6. Create the required entitlements.
+7. Record the normalized order or transaction.
 
-### External Integrations
+---
 
+## Member Administration
+
+Starting with **1.8.6**, Evoxup Member Administration `1.1.0` is provided as a bundled internal module instead of being permanently embedded in Core.
+
+Module:
+
+```text
+modules/evomembers-member-administration-lite/
+```
+
+The module can be enabled or disabled from:
+
+```text
+Evoxup → Extensions & Add-ons
+```
+
+When enabled, it provides the Customers administration workspace for managing WordPress users and EVO member records.
+
+Capabilities include:
+
+- Customer/member directory
+- Existing WordPress user linking
+- Member profile management
+- Membership operations
+- License and activation context
+- Entitlement visibility
+- Order context
+- Search and filtering
+- Activity information
+
+Disabling the module does not remove member, membership, license, order, entitlement, or event data.
+
+Sites upgrading from 1.8.5 receive a one-time migration that preserves the existing Customers workspace behavior.
+
+---
+
+## Bundled Modules
+
+Evoxup Membership includes optional local Lite modules.
+
+Current bundled modules include:
+
+```text
+evomembers-account-lite
+evomembers-analytics-lite
+evomembers-content-access-lite
+evomembers-member-administration-lite
+evomembers-social-identity-lite
+evomembers-system-health-lite
+```
+
+Bundled modules:
+
+- Run locally
+- Are included with the public plugin
+- Can be enabled or disabled by an administrator
+- Do not require a paid key
+- Use the Evoxup extension/module architecture
+
+Commercial PRO and SUPER STAR add-ons displayed by the administration interface are separate products. Their executable code is not bundled into this repository's public WordPress package.
+
+---
+
+## WooCommerce Integration
+
+WooCommerce is optional.
+
+When WooCommerce is installed, administrators can map WooCommerce products to EVO Products and configure how purchases should be fulfilled.
+
+A successful WooCommerce order can trigger:
+
+```text
+WooCommerce Order
+       ↓
+EVO Product
+       ↓
+Customer / Member
+       ↓
+Membership Plan
+       ↓
+License
+       ↓
+Entitlements
+```
+
+When EVO licensing is selected, Evoxup can issue the corresponding EVO license.
+
+When another licensing provider is configured, Evoxup respects that provider instead of issuing a duplicate license.
+
+Evoxup Membership uses supported WooCommerce APIs and supports the integration paths used with:
+
+- WooCommerce HPOS
+- Cart/Checkout Blocks
+
+---
+
+## Verified Webhooks
+
+Evoxup Membership can receive authenticated commerce events from configured providers.
+
+Verified events can:
+
+- Resolve an external product to an EVO Product
+- Create or update an Evoxup customer/member
+- Create or update a normalized order
+- Grant memberships
+- Update memberships
+- Cancel or revoke memberships
+- Create entitlements
+- Revoke entitlements
+- Issue EVO licenses when configured
+- Process supported refund and cancellation events
+
+Webhook payloads are fulfillment inputs.
+
+They cannot arbitrarily:
+
+- Create privileged WordPress administrator accounts
+- Choose privileged WordPress roles
+- Install plugins
+- Remove plugins
+- Install themes
+- Change arbitrary WordPress settings
+- Execute arbitrary PHP
+- Execute arbitrary SQL
+- Perform arbitrary filesystem operations
+
+Remote fulfillment does not create WordPress users.
+
+If a matching WordPress account already exists, Evoxup can link it through the supported identity workflow.
+
+---
+
+## Universal Integrations
+
+Evoxup uses a provider-neutral integration model.
+
+External providers can participate in commerce or licensing flows without becoming hard dependencies of Core.
+
+The architecture is designed to support:
+
+- WooCommerce
 - External commerce providers
-- Webhook provider interfaces
-- License provider interfaces
-- REST API integrations
-- Provider adapters
-- WordPress hooks and filters
-- Modular integration architecture
+- External licensing providers
+- Verified webhook providers
+- External API services
+- Future adapters using supported APIs and hooks
 
-### REST API
+Core functionality does not depend on one specific external commerce provider.
 
-Evoxup Membership includes a REST API architecture for working with platform capabilities programmatically.
+---
 
-Supported API areas include:
+## External API
 
-- Products
-- Plans
-- Memberships
-- Customers
-- Orders
-- Licenses
-- Entitlements
-- Purchase links
-- Notifications
-- Events
-- Audit information
-- Platform extensions
+Administrators can optionally configure an external HTTPS API endpoint.
 
-### Developer SDK
+When External or Hybrid API mode is enabled, Evoxup can perform server-to-server requests to the administrator-configured endpoint.
 
-The project includes an SDK layer designed to provide structured access to Evoxup Membership capabilities.
+Depending on the requested operation, transmitted data can include:
 
-SDK components include APIs for:
+- Client identifier
+- Configured service credential
+- Correlation/request identifier
+- Node identifier
+- License key
+- Product identifier
+- Site URL/domain
+- Client version
+- Licensing-operation data
 
-- Audit
-- Capabilities
-- Customers
-- Entitlements
-- Events
-- Licenses
-- Memberships
-- Notifications
-- Orders
-- Plans
-- Products
-- Purchase links
-- Extension registry
-- Platform storage
+Plain HTTP endpoints are rejected for supported external API configuration.
+
+Evoxup Membership does not require an Evoxup external service for normal local operation.
+
+---
+
+## Identity Model
+
+A WordPress user and an EVO member record are separate identities.
+
+When an existing WordPress account matches an EVO member, Evoxup can link them while preserving the native WordPress user ID.
+
+This design prevents remote commerce fulfillment from becoming a WordPress account-provisioning mechanism.
 
 ---
 
 ## Architecture
 
-Evoxup Membership follows a modular WordPress-native architecture.
+The project is organized into several distinct layers.
 
 ```text
 evoxup-membership/
 │
-├── Extensions/
 ├── api/
 │   └── V1/
+│
 ├── assets/
+│
 ├── docs/
+│
+├── Extensions/
+│
 ├── modules/
+│   ├── evomembers-account-lite/
+│   ├── evomembers-analytics-lite/
+│   ├── evomembers-content-access-lite/
+│   ├── evomembers-member-administration-lite/
+│   ├── evomembers-social-identity-lite/
+│   └── evomembers-system-health-lite/
+│
 ├── src/
-│   ├── API/
 │   ├── Admin/
+│   ├── API/
 │   ├── Contracts/
 │   ├── Core/
 │   ├── Editor/
@@ -170,319 +344,397 @@ evoxup-membership/
 │   ├── SDK/
 │   └── Services/
 │
+├── CHANGELOG.md
+├── LICENSE
+├── README.md
 ├── evoxup-membership.php
 ├── readme.txt
-├── CHANGELOG.md
 └── uninstall.php
 ```
 
-The architecture separates platform responsibilities into independent layers rather than placing all functionality into a single monolithic plugin class.
+### Core
 
----
+Core provides shared infrastructure such as:
 
-## Membership Flow
+- Database management
+- Capability definitions
+- Module loading
+- Extension context
+- Version compatibility
+- Installation and upgrade handling
+- Security/request guards
+- Core hooks
 
-A typical Evoxup Membership commercial workflow can be represented as:
+### Services
 
-```text
-Sale
-  ↓
-Product / Membership Plan
-  ↓
-Membership
-  ↓
-License
-  ↓
-Entitlements
-  ↓
-Access / Fulfillment
-```
+The Services layer contains business operations including:
 
-Products, plans, memberships, licenses, and entitlements are treated as distinct platform concepts.
-
-This provides greater flexibility for commerce integrations and allows Evoxup Membership to work with multiple providers without making the core architecture dependent on a single commerce platform.
-
----
-
-## Product & Plan Model
-
-An Evoxup Product represents the commercial product inside the platform.
-
-A product may be connected to:
-
-- One or more membership plans
-- WooCommerce products
-- External commerce products
-- Licensing providers
-- Purchase links
+- Customers
+- Memberships
+- Products
+- Plans
+- Orders
+- Licenses
 - Entitlements
-- Fulfillment workflows
+- Integrations
+- Notifications
+- Mapping
+- Purchase links
+- Fulfillment routing
 
-Membership plans remain separate from products so the platform can support flexible relationships between commercial products and membership access.
+### SDK
 
----
-
-## Licensing Architecture
-
-Evoxup Membership includes a provider-neutral licensing architecture.
-
-Licensing logic is separated from commerce logic, allowing different products to use different licensing strategies.
-
-The platform can support:
-
-```text
-Product
-  ↓
-License Provider
-  ↓
-License
-  ↓
-Verification
-  ↓
-Entitlements
-```
-
-The licensing architecture is designed so external providers can be integrated without replacing or tightly coupling the Evoxup core licensing system.
-
----
-
-## Fulfillment
-
-Evoxup Membership includes a fulfillment layer capable of routing fulfillment according to the product and integration configuration.
-
-The project includes fulfillment components for:
-
-- Evoxup fulfillment
-- Module fulfillment
-- WooCommerce fulfillment
-- External license fulfillment
-- Combined fulfillment
-
-This architecture allows multiple fulfillment mechanisms to coexist.
-
----
-
-## Provider-Neutral Integrations
-
-Evoxup Membership is designed to avoid hard dependency on a single external commerce or licensing provider.
-
-Integrations can be implemented through:
-
-- Provider adapters
-- Webhooks
-- REST APIs
-- WordPress hooks
-- Extension modules
-- License provider interfaces
-- Webhook provider interfaces
-
-This keeps the core platform portable and extensible.
-
----
-
-## WordPress-Native Integration
-
-Evoxup Membership is built as a WordPress-native platform.
-
-It uses WordPress APIs and integration mechanisms where appropriate, including:
-
-- Actions
-- Filters
-- REST API
-- WordPress users
-- WordPress mail
-- WordPress administration
-- WordPress capabilities
-- WordPress plugin lifecycle
-- WordPress scheduling infrastructure
-
-Optional integrations should remain optional and should not become required dependencies for the core platform.
-
----
-
-## WooCommerce
-
-WooCommerce integration is optional.
-
-When WooCommerce is available, Evoxup Membership can connect commerce activity with membership, licensing, products, plans, customers, and fulfillment workflows.
-
-WooCommerce remains the commerce layer while Evoxup Membership manages membership and licensing responsibilities.
-
-This separation helps avoid coupling the entire membership platform to WooCommerce.
-
----
-
-## Modular Extensions
-
-Evoxup Membership supports modular functionality through its extension architecture.
-
-Optional functionality can be isolated from the core platform and loaded only when required.
-
-This architecture helps:
-
-- Keep the core stable
-- Reduce unnecessary dependencies
-- Improve maintainability
-- Support optional features
-- Enable future integrations
-- Provide clear extension boundaries
-
----
-
-## Included Modules
-
-The repository includes modular components for additional functionality.
+The SDK exposes structured APIs for supported Evoxup operations.
 
 Examples include:
 
-- Account functionality
-- Analytics
-- Content access
-- Social identity
-- System health
+- Product API
+- Customer API
+- Membership API
+- License API
+- Entitlement API
+- Order API
+- Plan API
+- Notification API
+- Capability API
+- Purchase Link API
+- Platform APIs
 
-Modules are designed to extend the platform without forcing unrelated functionality into the core.
+### Contracts
 
----
-
-## Security
-
-Evoxup Membership includes infrastructure intended to support secure membership and licensing workflows.
-
-Security-related architecture includes:
-
-- Request validation
-- Capability checks
-- License verification
-- REST authentication infrastructure
-- Cryptographic utilities
-- Audit trail support
-- Controlled provider interfaces
-- WordPress-native permission handling
-
-If you discover a security vulnerability, please do **not** publish sensitive vulnerability information in a public GitHub issue.
-
-Use the official Evoxup communication channels for responsible disclosure.
+Interfaces define stable boundaries between Core, services, integrations, extensions, and SDK implementations.
 
 ---
 
-## Audit & Events
+## Fulfillment Architecture
 
-The platform includes services for audit and event handling.
+Evoxup separates commerce detection from fulfillment.
 
-These components allow important platform operations to be recorded and routed through structured workflows.
+```text
+Commerce Provider
+       ↓
+Verified Event / Order
+       ↓
+Mapping
+       ↓
+EVO Product
+       ↓
+Fulfillment Router
+       ↓
+┌────────────────────────────┐
+│ Membership                 │
+│ License                    │
+│ Entitlements               │
+│ Customer / Member          │
+│ Order / Transaction        │
+│ Module fulfillment         │
+│ External-license handling  │
+└────────────────────────────┘
+```
 
-The architecture includes:
-
-- Audit trail services
-- Event bus
-- Event catalog
-- Event message routing
-- Notifications
-- Platform activity infrastructure
+This allows supported commerce and licensing providers to participate without requiring Core to be rewritten around a single provider.
 
 ---
 
 ## Requirements
 
-Recommended production environment:
-
-- WordPress
-- PHP 8.2/8.3+ or newer
-- HTTPS for production websites
-- MySQL/MariaDB supported by the installed WordPress version
-
-WooCommerce is **optional** and is required only when WooCommerce-specific functionality is used.
+| Requirement | Version |
+|---|---|
+| WordPress | 6.5 or later |
+| PHP | 8.3 or later |
+| Tested up to | WordPress 7.1 |
+| WooCommerce | Optional |
+| License | GPL-2.0-or-later |
 
 ---
 
 ## Installation
 
-### Download the Official Release
+### Recommended: GitHub Release Package
 
-Download the latest installation package from:
+Go to:
 
-**[Download the Latest Evoxup Membership Release](https://github.com/evoxup/evoxup-membership/releases/latest)**
+**Releases → Latest Release**
 
-For version **1.8.5**, use the official release asset:
-
-```text
-evoxup-membership-1.8.5.zip
-```
-
-Do not confuse the official installation package with GitHub's automatically generated:
+Download:
 
 ```text
-Source code (zip)
-Source code (tar.gz)
+evoxup-membership-<version>.zip
 ```
 
-The versioned Evoxup Membership ZIP is the intended WordPress installation package.
-
-### Install in WordPress
-
-From the WordPress administration dashboard:
+For example:
 
 ```text
-Plugins
-→ Add Plugin
-→ Upload Plugin
-→ Choose evoxup-membership ZIP
-→ Install Now
-→ Activate
+evoxup-membership-1.8.6.zip
 ```
 
-After activation, configure Evoxup Membership from the WordPress administration interface.
+Then:
+
+1. Open WordPress Admin.
+2. Go to **Plugins → Add New Plugin**.
+3. Select **Upload Plugin**.
+4. Upload the Evoxup Membership ZIP.
+5. Install.
+6. Activate the plugin.
+7. Open the Evoxup administration area.
+
+> Do not use GitHub's automatically generated **Source code (zip)** as the WordPress installation package. Use the versioned Evoxup Membership ZIP attached to the GitHub Release.
 
 ---
 
-## Current Release
+## Release Integrity
 
-### Evoxup Membership 1.8.5
+Official GitHub releases include a SHA-256 checksum file:
 
-Version `1.8.5` is available from GitHub Releases.
+```text
+evoxup-membership-<version>.zip.sha256
+```
 
-**[View Latest Release](https://github.com/evoxup/evoxup-membership/releases/latest)**
+Example:
 
-**[View All Releases](https://github.com/evoxup/evoxup-membership/releases)**
+```text
+evoxup-membership-1.8.6.zip.sha256
+```
 
-GitHub automatically provides source archives for each tag, while the official WordPress-ready package is distributed as a release asset.
+This can be used to verify that the downloaded package matches the artifact created by the release workflow.
+
+---
+
+## Automated Release Builds
+
+Release packages are built automatically by GitHub Actions.
+
+The release workflow:
+
+1. Validates the release tag.
+2. Verifies the plugin version.
+3. Verifies the `readme.txt` stable tag.
+4. Runs PHP syntax validation.
+5. Prepares a WordPress distribution package.
+6. Excludes development-only files.
+7. Creates the release ZIP.
+8. Generates a SHA-256 checksum.
+9. Validates the ZIP structure.
+10. Uploads the final package to the GitHub Release.
+
+Development-only files such as the following are not intended to be included in the WordPress release package:
+
+```text
+.git/
+.github/
+phpstan.neon.dist
+phpstan-bootstrap.php
+vendor/
+node_modules/
+```
+
+---
+
+## Quality Assurance
+
+The `main` branch is checked automatically.
+
+### PHP Syntax Check
+
+Every PHP file is validated for syntax errors.
+
+[View workflow](https://github.com/evoxup/evoxup-membership/actions/workflows/php-syntax.yml)
+
+### PHPStan Static Analysis
+
+Static analysis is performed using PHPStan.
+
+[View workflow](https://github.com/evoxup/evoxup-membership/actions/workflows/phpstan.yml)
+
+### WordPress Plugin Check
+
+The project is checked using the WordPress Plugin Check workflow.
+
+[View workflow](https://github.com/evoxup/evoxup-membership/actions/workflows/wordpress-plugin-check.yml)
+
+### Release Build
+
+Official GitHub release packages are created by:
+
+[Build Release Package](https://github.com/evoxup/evoxup-membership/actions/workflows/release-build.yml)
+
+---
+
+## Development Files
+
+The repository includes files used for development and continuous integration.
+
+Examples:
+
+```text
+.github/
+phpstan.neon.dist
+phpstan-bootstrap.php
+```
+
+These files are useful for development but are excluded from the official WordPress release package where appropriate.
+
+---
+
+## Repository Protection
+
+The `main` branch uses repository protection rules.
+
+The project is configured to protect the stable branch from accidental destructive changes such as:
+
+- Branch deletion
+- Force pushes
+- Invalid updates
+
+Project maintainers should preserve these protections except during carefully controlled repository maintenance.
 
 ---
 
 ## Documentation
 
-Developer and architecture documentation is available in the repository:
+Developer and architecture documentation is available in:
 
-**[Browse Documentation](https://github.com/evoxup/evoxup-membership/tree/main/docs)**
+```text
+docs/
+```
 
-Product information is available at:
+Online:
 
-**[Evoxup Membership Website](https://evoxup.com/evo-membership/)**
+https://github.com/evoxup/evoxup-membership/tree/main/docs
+
+Additional extension documentation is available under:
+
+```text
+Extensions/
+```
 
 ---
 
-## Repository Structure
+## Releases
 
-The main repository contains the public Evoxup Membership codebase.
+Latest release:
 
-Important locations include:
+https://github.com/evoxup/evoxup-membership/releases/latest
 
-| Directory | Purpose |
-|---|---|
-| `Extensions/` | Extension-related resources |
-| `api/V1/` | REST API routes |
-| `assets/` | Frontend and administration assets |
-| `docs/` | Technical and developer documentation |
-| `modules/` | Modular platform components |
-| `src/API/` | API client and configuration |
-| `src/Admin/` | WordPress administration components |
-| `src/Contracts/` | Platform interfaces and contracts |
-| `src/Core/` | Core platform infrastructure |
-| `src/Integrations/` | WordPress and commerce integrations |
-| `src/Providers/` | Provider registries |
-| `src/SDK/` | Developer SDK |
-| `src/Services/` | Membership platform services |
+All releases:
+
+https://github.com/evoxup/evoxup-membership/releases
+
+Current stable release:
+
+```text
+1.8.6
+```
+
+---
+
+## Version 1.8.6 Highlights
+
+Evoxup Membership 1.8.6 includes:
+
+- Member Administration `1.1.0` moved from the always-on Core workspace to a bundled internal module.
+- Local Enable / Disable control for Member Administration.
+- Upgrade migration preserving the Customers workspace for installations upgrading from 1.8.5.
+- Member, membership, license, order, entitlement, and event data preserved independently from the module enabled state.
+- Corrected `block_categories_all` callback registration.
+- Simplified legacy table-prefix migration error initialization.
+- Updated bundled module compatibility metadata.
+- Database schema remains `3.1.1`.
+- Extension API remains `2.1.0`.
+- PHP Syntax Check passing.
+- PHPStan Static Analysis passing.
+- WordPress Plugin Check passing.
+
+See:
+
+[CHANGELOG.md](https://github.com/evoxup/evoxup-membership/blob/main/CHANGELOG.md)
+
+---
+
+## Updating
+
+For the public WordPress distribution, Core updates are intended to follow the normal WordPress plugin update path.
+
+Separately distributed Evoxup packages can use their own documented distribution and entitlement mechanisms.
+
+Commercial package eligibility does not restrict features already included in Evoxup Membership Core.
+
+---
+
+## Security
+
+Security issues should **not** be submitted as public GitHub Issues when they contain vulnerability details.
+
+Please review the security policy:
+
+https://github.com/evoxup/evoxup-membership/security/policy
+
+Security documentation:
+
+[SECURITY.md](https://github.com/evoxup/evoxup-membership/blob/main/.github/SECURITY.md)
+
+---
+
+## Reporting Bugs
+
+Before opening an issue:
+
+1. Confirm you are using the latest stable release.
+2. Reproduce the issue with the relevant integration configuration.
+3. Collect non-sensitive error details.
+4. Do not include passwords, API secrets, private license keys, or customer-sensitive data.
+
+Open a bug report:
+
+https://github.com/evoxup/evoxup-membership/issues/new/choose
+
+---
+
+## Feature Requests
+
+Feature ideas are welcome through the GitHub issue templates.
+
+Submit a request:
+
+https://github.com/evoxup/evoxup-membership/issues/new/choose
+
+Feature proposals should explain:
+
+- The use case
+- The problem being solved
+- Expected behavior
+- Compatibility considerations
+- Whether the feature belongs in Core, a bundled module, or a separate integration/add-on
+
+---
+
+## Contributing
+
+Contributions are welcome.
+
+Please read:
+
+[CONTRIBUTING.md](https://github.com/evoxup/evoxup-membership/blob/main/.github/CONTRIBUTING.md)
+
+Typical contribution workflow:
+
+```text
+Fork repository
+      ↓
+Create feature/fix branch
+      ↓
+Make focused changes
+      ↓
+Run checks
+      ↓
+Open Pull Request
+      ↓
+Review
+      ↓
+Merge
+```
+
+Please avoid mixing unrelated architectural changes into a single Pull Request.
 
 ---
 
@@ -490,110 +742,135 @@ Important locations include:
 
 Evoxup Membership follows several architectural principles.
 
-### Stable Core
+### WordPress Native
 
-Core membership, licensing, entitlement, and product functionality should remain under Evoxup control.
+Core functionality should use supported WordPress APIs, hooks, permissions, database APIs, HTTP APIs, filesystem APIs, and extension mechanisms.
 
-### Optional Integrations
+### Provider Neutral
 
-Third-party systems should be integrated through optional adapters, providers, hooks, and APIs rather than mandatory core dependencies.
+Core commerce and licensing behavior should not be permanently tied to one external provider.
 
-### Provider Neutrality
+### Modular
 
-The platform should support multiple commerce and licensing providers without hard-coding the entire system around a single provider.
+Optional capabilities should be isolated into modules or integrations where appropriate.
 
-### WordPress Compatibility
+### Secure by Default
 
-Integrations should use WordPress public APIs and established WordPress extension mechanisms.
+Sensitive actions should use:
 
-### Extensibility
+- Capability checks
+- Nonces where applicable
+- Input validation
+- Sanitization
+- Escaping
+- Authenticated integrations
+- Verified webhooks
+- HTTPS for supported external API configuration
 
-New functionality should be capable of being introduced through clearly defined interfaces and extensions.
+### Stable Core Boundaries
 
-### Separation of Responsibilities
+Extensions and integrations should use public contracts, APIs, hooks, and supported interfaces rather than directly modifying unrelated Core internals.
 
-Commerce, membership, licensing, entitlements, notifications, and fulfillment should remain conceptually separated even when working together.
+### Local First
 
----
-
-## For Developers
-
-Developers extending Evoxup Membership should prefer the public platform APIs, contracts, hooks, providers, and SDK interfaces rather than directly modifying internal implementation details.
-
-Available architectural extension points include:
-
-- WordPress actions
-- WordPress filters
-- REST APIs
-- Platform contracts
-- Provider interfaces
-- Extension registry
-- SDK APIs
-- Event infrastructure
-
-See the documentation directory for additional technical information.
+Features included in the public plugin should remain usable without requiring a paid remote Evoxup service.
 
 ---
 
-## Issues & Feedback
+## Free and Commercial Boundary
 
-Bug reports, compatibility reports, and constructive feedback are welcome.
+The public Evoxup Membership plugin does not use a paid key to unlock functionality already shipped in the plugin.
 
-**[Open an Issue](https://github.com/evoxup/evoxup-membership/issues)**
+Bundled Lite modules are included functionality.
 
-When reporting a problem, include useful diagnostic information when possible:
+Separate PRO or SUPER STAR products can be distributed independently.
 
-- Evoxup Membership version
-- WordPress version
-- PHP version
-- Relevant integration
-- Error message
-- Reproduction steps
-
-Please do not include passwords, license keys, API secrets, private customer information, or other sensitive data in public issues.
-
----
-
-## Releases
-
-Official releases are published through GitHub Releases:
-
-**https://github.com/evoxup/evoxup-membership/releases**
-
-Release packages may include:
+In short:
 
 ```text
-evoxup-membership-x.x.x.zip
+Included in public plugin
+        =
+Available without paid unlock
 ```
 
-GitHub also automatically generates source archives for every release tag.
+while:
+
+```text
+Separately distributed commercial package
+        =
+Can use separate licensing / entitlement rules
+```
+
+---
+
+## Support
+
+Project website:
+
+https://evoxup.com/evo-membership/
+
+GitHub Issues:
+
+https://github.com/evoxup/evoxup-membership/issues
+
+Documentation:
+
+https://github.com/evoxup/evoxup-membership/tree/main/docs
+
+---
+
+## Support Evoxup
+
+Evoxup Membership is free software.
+
+If the project is useful to you and you would like to support continued development, an optional contribution can be made at:
+
+https://evoxup.com/donate/
+
+Donations are optional and do not unlock features, memberships, licenses, updates, or functionality already included in the public plugin.
 
 ---
 
 ## License
 
-Evoxup Membership is distributed under the licensing terms declared by the project and plugin package.
+Evoxup Membership is licensed under the **GNU General Public License v2.0 or later**.
 
-The public WordPress-compatible code is intended to remain compatible with the applicable WordPress licensing requirements.
+See:
 
----
+[LICENSE](https://github.com/evoxup/evoxup-membership/blob/main/LICENSE)
 
-## Official Links
-
-- **Evoxup:** https://evoxup.com/
-- **Evoxup Membership:** https://evoxup.com/evo-membership/
-- **GitHub Repository:** https://github.com/evoxup/evoxup-membership
-- **Latest Release:** https://github.com/evoxup/evoxup-membership/releases/latest
-- **All Releases:** https://github.com/evoxup/evoxup-membership/releases
-- **Documentation:** https://github.com/evoxup/evoxup-membership/tree/main/docs
-- **Issues:** https://github.com/evoxup/evoxup-membership/issues
+```text
+GPL-2.0-or-later
+```
 
 ---
 
-## Evoxup
+## Project Links
 
-**Build. License. Manage. Extend.**
+| Resource | Link |
+|---|---|
+| Website | https://evoxup.com/evo-membership/ |
+| Repository | https://github.com/evoxup/evoxup-membership |
+| Latest Release | https://github.com/evoxup/evoxup-membership/releases/latest |
+| Releases | https://github.com/evoxup/evoxup-membership/releases |
+| Documentation | https://github.com/evoxup/evoxup-membership/tree/main/docs |
+| Issues | https://github.com/evoxup/evoxup-membership/issues |
+| Security | https://github.com/evoxup/evoxup-membership/security/policy |
+| Contributing | https://github.com/evoxup/evoxup-membership/blob/main/.github/CONTRIBUTING.md |
+| Changelog | https://github.com/evoxup/evoxup-membership/blob/main/CHANGELOG.md |
+| Donate | https://evoxup.com/donate/ |
 
-Evoxup Membership provides a flexible foundation for building professional WordPress membership, licensing, entitlement, and commerce-connected products.
+---
 
-© 2026 Evoxup
+<p align="center">
+  <strong>Evoxup Membership</strong><br>
+  Membership • Licensing • Products • Entitlements • WooCommerce • Integrations
+</p>
+
+<p align="center">
+  <a href="https://evoxup.com/evo-membership/">evoxup.com</a>
+  ·
+  <a href="https://github.com/evoxup/evoxup-membership/releases/latest">Latest Release</a>
+  ·
+  <a href="https://github.com/evoxup/evoxup-membership/issues">Report an Issue</a>
+</p>
