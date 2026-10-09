@@ -1,0 +1,74 @@
+name: PHPStan Static Analysis
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  phpstan:
+    name: PHPStan Level 1
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup PHP 8.3
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.3"
+          coverage: none
+          tools: composer:v2
+
+      - name: Show PHP version
+        run: php -v
+
+      - name: Show Composer version
+        run: composer --version
+
+      - name: Create temporary PHPStan environment
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          composer require \
+            --dev \
+            --no-interaction \
+            --no-progress \
+            --no-scripts \
+            phpstan/phpstan:^2 \
+            szepeviktor/phpstan-wordpress:^2 \
+            php-stubs/woocommerce-stubs
+
+      - name: Run PHPStan
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          vendor/bin/phpstan analyse \
+            --configuration=phpstan.neon.dist \
+            --no-progress \
+            --memory-limit=1G
+
+      - name: PHPStan summary
+        if: success()
+        run: |
+          {
+            echo "## PHPStan Static Analysis"
+            echo ""
+            echo "✅ PHPStan Level 1 passed."
+            echo ""
+            echo "- PHP: 8.3"
+            echo "- WordPress support: enabled"
+            echo "- WooCommerce stubs: enabled"
+          } >> "$GITHUB_STEP_SUMMARY"
