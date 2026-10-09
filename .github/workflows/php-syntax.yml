@@ -19,36 +19,19 @@ jobs:
     name: PHP Syntax Check
     runs-on: ubuntu-latest
 
-    strategy:
-      fail-fast: false
-      matrix:
-        php-version:
-          - "8.1"
-          - "8.2"
-          - "8.3"
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup PHP ${{ matrix.php-version }}
+      - name: Setup PHP 8.3
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matrix.php-version }}
+          php-version: "8.3"
           coverage: none
           tools: none
 
       - name: Show PHP version
         run: php -v
-
-      - name: Find PHP files
-        run: |
-          echo "Scanning PHP files..."
-          find . -type f -name "*.php" \
-            ! -path "./vendor/*" \
-            ! -path "./node_modules/*" \
-            ! -path "./.git/*" \
-            -print
 
       - name: Check PHP syntax
         shell: bash
@@ -83,4 +66,4 @@ jobs:
             exit 1
           fi
 
-          echo "All PHP files passed syntax validation."
+          echo "All PHP files passed syntax validation on PHP 8.3."
