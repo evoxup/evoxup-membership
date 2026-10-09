@@ -85,9 +85,8 @@ final class Installer {
     private static function install(): void {
         require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 
-        $table_prefix_errors = Database::migrate_legacy_table_prefix();
+        $migration_errors = Database::migrate_legacy_table_prefix();
         $previous_version = (string) get_option( 'evomembers_db_version', '' );
-        $migration_errors = isset( $table_prefix_errors ) ? $table_prefix_errors : array();
 
         // Schema 3.0 is the deliberate clean-core reset requested for the
         // stable rebuild. Only EVO-owned legacy tables are removed. Once
