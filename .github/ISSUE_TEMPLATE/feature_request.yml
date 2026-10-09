@@ -1,0 +1,119 @@
+name: Feature Request
+description: Suggest an improvement or new capability for Evoxup Membership
+title: "[Feature]: "
+labels:
+  - enhancement
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for suggesting an improvement to **Evoxup Membership**.
+
+        Evoxup Membership follows a modular, WordPress-native, provider-neutral architecture.
+        New features should avoid unnecessary mandatory dependencies and should preserve existing integrations whenever possible.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or need
+      description: Describe the problem this feature would solve.
+      placeholder: "What limitation or workflow problem are you trying to solve?"
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed solution
+      description: Describe the behavior you would like to see.
+      placeholder: "Explain how the feature should work."
+    validations:
+      required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Feature area
+      options:
+        - Memberships
+        - Products
+        - Membership Plans
+        - Licensing
+        - Entitlements
+        - Customers / Members
+        - Orders / Fulfillment
+        - WooCommerce Integration
+        - External Provider Integration
+        - Webhooks
+        - REST API
+        - SDK
+        - Extensions / Modules
+        - Admin Interface
+        - Frontend
+        - Notifications / Email
+        - Developer Experience
+        - Documentation
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: architecture
+    attributes:
+      label: Where should this capability live?
+      description: Choose the best fit if known.
+      options:
+        - Core platform
+        - Optional extension
+        - Provider / integration adapter
+        - Module
+        - REST API / SDK
+        - Documentation only
+        - Not sure
+    validations:
+      required: true
+
+  - type: textarea
+    id: providers
+    attributes:
+      label: Providers or integrations affected
+      description: List any WooCommerce or external providers that should remain compatible.
+      placeholder: "None, WooCommerce, external providers, etc."
+    validations:
+      required: false
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Describe any workarounds or alternative approaches you considered.
+    validations:
+      required: false
+
+  - type: textarea
+    id: compatibility
+    attributes:
+      label: Compatibility and migration considerations
+      description: Mention any expected impact on existing users, APIs, extensions, providers, or stored data.
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional context
+      description: Add mockups, screenshots, examples, or references if useful.
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: principles
+    attributes:
+      label: Architectural confirmation
+      options:
+        - label: The request does not intentionally make an optional third-party service a mandatory core dependency.
+          required: true
+        - label: The request should preserve existing provider integrations unless a breaking change is explicitly justified.
+          required: true
+        - label: I searched existing issues and did not find the same request.
+          required: true
