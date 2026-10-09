@@ -1,0 +1,317 @@
+name: Build Release Package
+
+on:
+  release:
+    types:
+      - published
+
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Existing release tag to build, for example v1.8.6"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-build-${{ github.event.release.tag_name || inputs.tag }}
+  cancel-in-progress: false
+
+jobs:
+  build-release:
+    name: Build WordPress Release Package
+    runs-on: ubuntu-latest
+
+    env:
+      PLUGIN_SLUG: evoxup-membership
+      RELEASE_TAG: ${{ github.event.release.tag_name || inputs.tag }}
+
+    steps:
+      - name: Validate release tag
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          echo "Release tag: ${RELEASE_TAG}"
+
+          if [[ ! "${RELEASE_TAG}" =~ ^v[0-9]+\.[0-9]+\.[0-9]+([.-][0-9A-Za-z.-]+)?$ ]]; then
+            echo "::error::Invalid release tag '${RELEASE_TAG}'. Expected a tag such as v1.8.6."
+            exit 1
+          fi
+
+      - name: Checkout release tag
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.release.tag_name || inputs.tag }}
+          fetch-depth: 0
+
+      - name: Setup PHP 8.3
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.3"
+          coverage: none
+          tools: none
+
+      - name: Read and verify plugin version
+        id: version
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          TAG_VERSION="${RELEASE_TAG#v}"
+
+          PLUGIN_VERSION="$(
+            sed -nE \
+              's/^[[:space:]]*\*?[[:space:]]*Version:[[:space:]]*([^[:space:]]+).*/\1/p' \
+              evoxup-membership.php \
+              | head -n 1
+          )"
+
+          if [ -z "${PLUGIN_VERSION}" ]; then
+            echo "::error file=evoxup-membership.php::Could not detect the plugin Version header."
+            exit 1
+          fi
+
+          echo "Tag version:    ${TAG_VERSION}"
+          echo "Plugin version: ${PLUGIN_VERSION}"
+
+          if [ "${PLUGIN_VERSION}" != "${TAG_VERSION}" ]; then
+            echo "::error file=evoxup-membership.php::Version mismatch. Release tag is ${TAG_VERSION}, but plugin header is ${PLUGIN_VERSION}."
+            exit 1
+          fi
+
+          echo "version=${PLUGIN_VERSION}" >> "${GITHUB_OUTPUT}"
+
+      - name: Verify readme stable tag
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          VERSION="${{ steps.version.outputs.version }}"
+
+          if [ ! -f "readme.txt" ]; then
+            echo "::error::readme.txt was not found."
+            exit 1
+          fi
+
+          STABLE_TAG="$(
+            sed -nE \
+              's/^[[:space:]]*Stable tag:[[:space:]]*([^[:space:]]+).*/\1/ip' \
+              readme.txt \
+              | head -n 1
+          )"
+
+          if [ -z "${STABLE_TAG}" ]; then
+            echo "::error file=readme.txt::Could not detect Stable tag."
+            exit 1
+          fi
+
+          echo "Plugin version: ${VERSION}"
+          echo "Stable tag:     ${STABLE_TAG}"
+
+          if [ "${STABLE_TAG}" != "${VERSION}" ]; then
+            echo "::error file=readme.txt::Stable tag is ${STABLE_TAG}, but release version is ${VERSION}."
+            exit 1
+          fi
+
+      - name: Check PHP syntax
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          FAILED=0
+          COUNT=0
+
+          while IFS= read -r -d '' file; do
+            COUNT=$((COUNT + 1))
+
+            if ! php -l "$file"; then
+              echo "::error file=$file::PHP syntax error detected"
+              FAILED=1
+            fi
+          done < <(
+            find . \
+              -type f \
+              -name "*.php" \
+              ! -path "./vendor/*" \
+              ! -path "./node_modules/*" \
+              ! -path "./.git/*" \
+              -print0
+          )
+
+          echo "PHP files checked: ${COUNT}"
+
+          if [ "${FAILED}" -ne 0 ]; then
+            echo "::error::One or more PHP syntax errors were detected."
+            exit 1
+          fi
+
+          echo "All PHP files passed syntax validation."
+
+      - name: Prepare release directory
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          VERSION="${{ steps.version.outputs.version }}"
+          BUILD_ROOT="${RUNNER_TEMP}/evoxup-release"
+          PACKAGE_DIR="${BUILD_ROOT}/${PLUGIN_SLUG}"
+
+          rm -rf "${BUILD_ROOT}"
+          mkdir -p "${PACKAGE_DIR}"
+
+          rsync -a ./ "${PACKAGE_DIR}/" \
+            --exclude=".git/" \
+            --exclude=".github/" \
+            --exclude=".gitignore" \
+            --exclude=".gitattributes" \
+            --exclude=".editorconfig" \
+            --exclude="node_modules/" \
+            --exclude="*.zip"
+
+          echo "Prepared package:"
+          echo "${PACKAGE_DIR}"
+
+          echo "Top-level package contents:"
+          find "${PACKAGE_DIR}" \
+            -maxdepth 1 \
+            -mindepth 1 \
+            -printf "%f\n" \
+            | sort
+
+      - name: Build ZIP package
+        id: package
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          VERSION="${{ steps.version.outputs.version }}"
+          BUILD_ROOT="${RUNNER_TEMP}/evoxup-release"
+          OUTPUT_DIR="${RUNNER_TEMP}/evoxup-artifacts"
+
+          ZIP_NAME="${PLUGIN_SLUG}-${VERSION}.zip"
+          ZIP_PATH="${OUTPUT_DIR}/${ZIP_NAME}"
+
+          mkdir -p "${OUTPUT_DIR}"
+
+          cd "${BUILD_ROOT}"
+          zip -r -9 "${ZIP_PATH}" "${PLUGIN_SLUG}"
+
+          if [ ! -f "${ZIP_PATH}" ]; then
+            echo "::error::ZIP package was not created."
+            exit 1
+          fi
+
+          echo "zip_name=${ZIP_NAME}" >> "${GITHUB_OUTPUT}"
+          echo "zip_path=${ZIP_PATH}" >> "${GITHUB_OUTPUT}"
+
+          echo ""
+          echo "Created package:"
+          ls -lh "${ZIP_PATH}"
+
+      - name: Create SHA-256 checksum
+        id: checksum
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          ZIP_PATH="${{ steps.package.outputs.zip_path }}"
+          ZIP_NAME="${{ steps.package.outputs.zip_name }}"
+          OUTPUT_DIR="$(dirname "${ZIP_PATH}")"
+          CHECKSUM_PATH="${OUTPUT_DIR}/${ZIP_NAME}.sha256"
+
+          cd "${OUTPUT_DIR}"
+          sha256sum "${ZIP_NAME}" > "${CHECKSUM_PATH}"
+
+          echo "checksum_path=${CHECKSUM_PATH}" >> "${GITHUB_OUTPUT}"
+
+          echo ""
+          echo "SHA-256:"
+          cat "${CHECKSUM_PATH}"
+
+      - name: Verify ZIP structure
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          ZIP_PATH="${{ steps.package.outputs.zip_path }}"
+
+          echo "Verifying ZIP package structure..."
+
+          unzip -l "${ZIP_PATH}" | head -n 40
+
+          if ! unzip -Z1 "${ZIP_PATH}" | grep -q "^${PLUGIN_SLUG}/evoxup-membership.php$"; then
+            echo "::error::The ZIP does not contain ${PLUGIN_SLUG}/evoxup-membership.php."
+            exit 1
+          fi
+
+          if ! unzip -Z1 "${ZIP_PATH}" | grep -q "^${PLUGIN_SLUG}/readme.txt$"; then
+            echo "::error::The ZIP does not contain ${PLUGIN_SLUG}/readme.txt."
+            exit 1
+          fi
+
+          if unzip -Z1 "${ZIP_PATH}" | grep -q "^${PLUGIN_SLUG}/\.github/"; then
+            echo "::error::The .github directory must not be included in the WordPress release package."
+            exit 1
+          fi
+
+          echo "ZIP structure is valid."
+
+      - name: Verify GitHub release exists
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+
+          gh release view "${RELEASE_TAG}" \
+            --repo "${GITHUB_REPOSITORY}" \
+            >/dev/null
+
+          echo "Release ${RELEASE_TAG} exists."
+
+      - name: Upload package to GitHub Release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+
+          ZIP_PATH="${{ steps.package.outputs.zip_path }}"
+          CHECKSUM_PATH="${{ steps.checksum.outputs.checksum_path }}"
+
+          gh release upload "${RELEASE_TAG}" \
+            "${ZIP_PATH}" \
+            "${CHECKSUM_PATH}" \
+            --repo "${GITHUB_REPOSITORY}" \
+            --clobber
+
+          echo ""
+          echo "Release assets uploaded successfully."
+
+      - name: Build summary
+        shell: bash
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          ZIP_NAME="${{ steps.package.outputs.zip_name }}"
+          CHECKSUM_PATH="${{ steps.checksum.outputs.checksum_path }}"
+
+          {
+            echo "# Evoxup Membership Release Build"
+            echo ""
+            echo "| Item | Value |"
+            echo "|---|---|"
+            echo "| Release tag | \`${RELEASE_TAG}\` |"
+            echo "| Plugin version | \`${VERSION}\` |"
+            echo "| Package | \`${ZIP_NAME}\` |"
+            echo "| PHP validation | PHP 8.3 |"
+            echo "| Status | ✅ Build completed |"
+            echo ""
+            echo "## SHA-256"
+            echo ""
+            echo '```text'
+            cat "${CHECKSUM_PATH}"
+            echo '```'
+          } >> "${GITHUB_STEP_SUMMARY}"
