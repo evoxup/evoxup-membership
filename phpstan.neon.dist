@@ -1,0 +1,29 @@
+includes:
+    - vendor/szepeviktor/phpstan-wordpress/extension.neon
+
+parameters:
+    level: 1
+
+    phpVersion: 80300
+
+    paths:
+        - evoxup-membership.php
+        - uninstall.php
+        - api
+        - modules
+        - src
+
+    bootstrapFiles:
+        - vendor/php-stubs/woocommerce-stubs/woocommerce-stubs.php
+        - vendor/php-stubs/woocommerce-stubs/woocommerce-packages-stubs.php
+
+    excludePaths:
+        analyse:
+            - vendor
+            - node_modules
+            - .git
+            - .github
+
+    reportUnmatchedIgnoredErrors: false
+
+    treatPhpDocTypesAsCertain: false
